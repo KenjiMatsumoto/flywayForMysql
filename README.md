@@ -1,22 +1,33 @@
 # flywayForMysql
-mysql用のflywayプロジェクト
+mysqlのDBマイグレーション用flywayプロジェクト
 
-前提条件
+## 前提条件
 
 以下のツールがインストール済みであること
-・gradle（バージョンはできれば最新で）
 
-ローカル環境でgradleコマンドを実行してプロジェクトを作成
+- gradle（バージョンはできれば最新で）
 
-repositoryとなるディレクトリを切る
-mkdir flyway
-cd flyway
-grade init
+<br>
 
-これで雛形が完成したので、build.gradleを編集する
+## 作業手順
+1. ローカル環境でgradleコマンドを実行してプロジェクトを作成
+
+2. repositoryとなるディレクトリを切る
+
+
+```shell:事前準備
+# mkdir flyway
+# cd flyway
+# grade init
+```
+
+<br>
+
+3. これで雛形が完成したので、build.gradleを編集する
 
 記載内容は以下のような感じ
 
+```gradle:設定ファイル
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
 apply plugin: 'org.flywaydb.flyway'
@@ -32,8 +43,8 @@ repositories {
 dependencies {
     // The production code uses the SLF4J logging API at compile time
     compile 'org.slf4j:slf4j-api:1.7.21'
-    // この辺は適宜変更
-    compile group: 'org.mysql', name: 'mysql', version: '9.3-1100-jdbc4'
+    // 最新のJDBCライブラリを取得
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
     
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
@@ -57,8 +68,11 @@ repositories {
 
 flyway {
     // for local
-    url='jdbc:mysql://localhost:3302/mydb_ms'
+    url='jdbc:postgresql://localhost:3306/mydb_ms'
     user='mydb_ms'
     password='mydb_ms'
     schemas = ['mydb_ms']
 }
+```
+
+編集できたら後はbaselineを引いてflywayの記載に則ってDDLファイルを作成していく
