@@ -38,7 +38,7 @@ repositories {
 
 flyway {
     // for local
-    url='jdbc:mysql://192.168.11.20:3306/mydb_ms'
+    url='jdbc:mysql://192.120.11.20:3306/mydb_ms'
     user='root'
     password='mysql'
 }
